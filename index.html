@@ -3,151 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão de Notas - Login & Cadastro</title>
+    <title>Sistema de Gestão de Notas - Login & Cadastro (Atualizado)</title>
+    
     <style>
-        /* [CSS Anterior Omitido para Foco, mas o código completo estaria aqui] */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            text-align: center;
+        /* [CSS Anterior Mantido para Aparência] */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; text-align: center; }
+        .page-section { display: none; padding: 40px 20px; min-height: 80vh; }
+        #login-page { display: block; }
+        .container { max-width: 450px; margin: 50px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="email"], input[type="password"], input[type="text"], input[type="tel"], textarea, select {
+            width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
         }
-
-        .page-section {
-            display: none;
-            padding: 40px 20px;
-            min-height: 80vh;
-        }
-
-        #login-page {
-            display: block;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="email"],
-        input[type="password"],
-        input[type="text"],
-        input[type="tel"], /* Adicionado o estilo para input tel */
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        h1, h2 {
-            text-align: center;
-            color: #007bff;
-        }
-
-        p {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Estilos da seção de Notas e Verificação (Mantidos) */
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background-color 0.3s; }
+        button:hover { background-color: #0056b3; }
+        h1, h2 { text-align: center; color: #007bff; }
+        p { text-align: center; margin-top: 15px; }
+        a { color: #007bff; text-decoration: none; display: block; text-align: center; margin-top: 10px; }
+        a:hover { text-decoration: underline; }
         #notas-page .container { max-width: 800px; }
         #notas-page h2 { margin-top: 0; margin-bottom: 20px; }
-        .lista-notas { margin-top: 30px; }
-        .nota { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-left: 5px solid #28a745; background-color: #e9f7ee; border-radius: 4px; }
-        .nota h4 { margin-top: 0; color: #28a745; }
-        .nota small { display: block; text-align: right; color: #6c757d; margin-top: 5px; }
-        #logout-link { float: right; margin-top: -30px; font-size: 14px; }
+        .toggle-options { display: flex; justify-content: space-between; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+        .toggle-options button { width: 50%; padding: 10px; background-color: #eee; color: #333; border: none; border-radius: 0; transition: all 0.2s; }
+        .toggle-options button.active { background-color: #007bff; color: white; font-weight: bold; }
+        .input-group-field { display: none; }
+        .input-group-field.active { display: block; }
         #verification-form input[type="text"] { font-size: 24px; text-align: center; letter-spacing: 5px; }
-
-        /* Estilo específico para a escolha E-mail/Telefone */
-        .toggle-options {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .toggle-options button {
-            width: 50%;
-            padding: 10px;
-            background-color: #eee;
-            color: #333;
-            border: none;
-            border-radius: 0;
-            transition: all 0.2s;
-        }
-        .toggle-options button.active {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-        }
-        .input-group-field {
-            display: none; /* Esconde os campos por padrão */
-        }
-        .input-group-field.active {
-            display: block; /* Exibe o campo ativo */
-        }
     </style>
 </head>
 <body>
     <script>
-        let verificationCode = null;
+        // Variáveis de estado global (para rastrear o processo)
         let registrationMethod = 'email'; // Padrão: 'email'
-        let registrationContact = ''; // Contato usado para a verificação
+        let registrationContact = '';     // O contato real (e-mail ou telefone)
+        
+        // Lista das 18 Províncias de Angola
+        const angolanProvinces = [
+            "Bengo", "Benguela", "Bié", "Cabinda", "Cuando Cubango", 
+            "Cuanza Norte", "Cuanza Sul", "Cunene", "Huambo", "Huíla", 
+            "Luanda", "Lunda Norte", "Lunda Sul", "Malanje", "Moxico", 
+            "Namibe", "Uíge", "Zaire"
+        ];
     </script>
 
     <section id="login-page" class="page-section">
         <div class="container">
             <h1>Sistema de Gestão de Notas</h1>
             <h2>Fazer Login</h2>
-            <form action="#notas-page" method="GET"> 
+            <form onsubmit="handleLogin(event)"> 
                 <div><label for="email_login">E-mail:</label><input type="email" id="email_login" name="email" required></div>
                 <div><label for="senha_login">Senha:</label><input type="password" id="senha_login" name="senha" required></div>
-                <button type="submit"><a href="#notas-page" style="color: white; display: inline; text-decoration: none;">Entrar</a></button>
+                <button type="submit">Entrar</button>
             </form>
             <p>Não tem uma conta?</p>
             <a href="#cadastro-page">Criar Conta Agora</a>
@@ -159,13 +65,22 @@
             <h1>Sistema de Gestão de Notas</h1>
             <h2>Criar Nova Conta</h2>
             
-            <form id="cadastro-form">
-                <div>
-                    <label for="nome_cadastro">Nome de Usuário:</label>
-                    <input type="text" id="nome_cadastro" name="nome" required>
-                </div>
+            <form onsubmit="handleRegistration(event)" id="cadastro-form">
+                <div><label for="nome_cadastro">Nome de Usuário:</label><input type="text" id="nome_cadastro" name="nome" required></div>
                 
-                <label>Método de Cadastro:</label>
+                <div>
+                    <label for="bi_cadastro">Número do B.I.:</label>
+                    <input type="text" id="bi_cadastro" name="bi" placeholder="Ex: 005559999LA000" required>
+                </div>
+
+                <div>
+                    <label for="provincia_cadastro">Província (Angola):</label>
+                    <select id="provincia_cadastro" name="provincia" required>
+                        <option value="" disabled selected>Selecione a Província</option>
+                        </select>
+                </div>
+
+                <label>Método de Confirmação:</label>
                 <div class="toggle-options">
                     <button type="button" id="toggle-email" class="active" onclick="setRegistrationMethod('email')">E-mail</button>
                     <button type="button" id="toggle-phone" onclick="setRegistrationMethod('phone')">Telefone</button>
@@ -173,7 +88,7 @@
                 
                 <div id="email-group" class="input-group-field active">
                     <label for="email_cadastro">E-mail:</label>
-                    <input type="email" id="email_cadastro" name="email">
+                    <input type="email" id="email_cadastro" name="email" required>
                 </div>
                 
                 <div id="phone-group" class="input-group-field">
@@ -181,12 +96,9 @@
                     <input type="tel" id="telefone_cadastro" name="telefone" placeholder="(99) 99999-9999">
                 </div>
                 
-                <div>
-                    <label for="senha_cadastro">Senha:</label>
-                    <input type="password" id="senha_cadastro" name="senha" required>
-                </div>
+                <div><label for="senha_cadastro">Senha:</label><input type="password" id="senha_cadastro" name="senha" required></div>
                 
-                <button type="button" onclick="iniciarVerificacao()">Cadastrar e Verificar</button>
+                <button type="submit">Cadastrar e Receber Código</button>
             </form>
             
             <p>Já tem uma conta?</p>
@@ -199,15 +111,17 @@
             <h1>Verificação de Segurança</h1>
             <h2>Insira o Código de Confirmação</h2>
             
-            <p id="msg-verificacao" style="color: #555;">Enviamos um código de 4 dígitos para o seu <span id="contact-type">e-mail</span>: <strong id="contact-value"></strong> (Simulado).</p>
+            <p id="msg-verificacao" style="color: #555;">
+                Aguarde. O código foi enviado para seu <span id="contact-type">e-mail</span>: <strong id="contact-value"></strong>.
+            </p>
             
-            <form id="verification-form">
+            <form onsubmit="handleVerification(event)">
                 <div>
                     <label for="codigo_confirmacao">Código (4 dígitos):</label>
                     <input type="text" id="codigo_confirmacao" name="codigo" maxlength="4" pattern="\d{4}" required>
                 </div>
                 
-                <button type="button" onclick="verificarCodigo()">Confirmar</button>
+                <button type="submit">Confirmar Cadastro</button>
             </form>
             
             <a href="#login-page">Voltar para o Login</a>
@@ -230,12 +144,8 @@
             <hr style="margin: 30px 0;">
             <section class="lista-notas">
                 <h3>Notas Armazenadas (Exemplo)</h3>
-                <div class="nota">
-                    <h4>Reunião com a Equipe</h4>
-                    <p>Lembrar de discutir o cronograma do projeto Alfa.</p>
-                    <small>Criada em: 07/11/2025</small>
-                </div>
-                <p style="text-align: center; font-style: italic;">*(A funcionalidade completa de salvar e gerenciar notas requer backend.)*</p>
+                <div class="nota"><h4>Reunião com a Equipe</h4><p>Lembrar de discutir o cronograma do projeto Alfa.</p><small>Criada em: 07/11/2025</small></div>
+                <p style="text-align: center; font-style: italic;">*(A funcionalidade completa depende do backend.)*</p>
             </section>
         </div>
     </section>
@@ -252,8 +162,19 @@
                 activeSection.style.display = 'block';
             }
         }
+        
+        // Função para preencher o seletor de províncias
+        function populateProvinces() {
+            const select = document.getElementById('provincia_cadastro');
+            angolanProvinces.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province;
+                option.textContent = province;
+                select.appendChild(option);
+            });
+        }
 
-        // NOVO: Função para alternar entre E-mail e Telefone no cadastro
+        // Função para alternar entre E-mail e Telefone no cadastro
         function setRegistrationMethod(method) {
             registrationMethod = method;
             const emailGroup = document.getElementById('email-group');
@@ -261,100 +182,144 @@
             const toggleEmail = document.getElementById('toggle-email');
             const togglePhone = document.getElementById('toggle-phone');
 
-            // 1. Alterna a visibilidade dos campos
+            const emailInput = document.getElementById('email_cadastro');
+            const phoneInput = document.getElementById('telefone_cadastro');
+            
             if (method === 'email') {
                 emailGroup.classList.add('active');
                 phoneGroup.classList.remove('active');
-                document.getElementById('telefone_cadastro').removeAttribute('required'); // Remove required do telefone
-                document.getElementById('email_cadastro').setAttribute('required', 'required'); // Adiciona required no email
+                phoneInput.removeAttribute('required');
+                emailInput.setAttribute('required', 'required');
+                phoneInput.value = ''; // Limpa o campo inativo
             } else { // 'phone'
                 phoneGroup.classList.add('active');
                 emailGroup.classList.remove('active');
-                document.getElementById('email_cadastro').removeAttribute('required'); // Remove required do email
-                document.getElementById('telefone_cadastro').setAttribute('required', 'required'); // Adiciona required no telefone
+                emailInput.removeAttribute('required');
+                phoneInput.setAttribute('required', 'required');
+                emailInput.value = ''; // Limpa o campo inativo
             }
 
-            // 2. Alterna o estilo dos botões
             toggleEmail.classList.toggle('active', method === 'email');
             togglePhone.classList.toggle('active', method === 'phone');
-            
-            // 3. Limpa o campo inativo para evitar confusão de dados
-            if (method === 'email') {
-                 document.getElementById('telefone_cadastro').value = '';
-            } else {
-                document.getElementById('email_cadastro').value = '';
-            }
         }
-        
-        // 1. SIMULAÇÃO: Inicia o processo de verificação (Gera e "envia" o código)
-        function iniciarVerificacao() {
+
+
+        // ************************************************************
+        // FUNÇÕES DE COMUNICAÇÃO COM O BACKEND (Simulação de Requisição)
+        // ************************************************************
+
+        async function handleRegistration(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
             const nome = document.getElementById('nome_cadastro').value;
             const senha = document.getElementById('senha_cadastro').value;
-            
-            let contato = '';
-            let tipo = '';
+            const bi = document.getElementById('bi_cadastro').value;
+            const provincia = document.getElementById('provincia_cadastro').value;
+            const email = document.getElementById('email_cadastro').value;
+            const telefone = document.getElementById('telefone_cadastro').value;
 
-            if (registrationMethod === 'email') {
-                contato = document.getElementById('email_cadastro').value;
-                tipo = 'e-mail';
-            } else { // 'phone'
-                contato = document.getElementById('telefone_cadastro').value;
-                tipo = 'telefone';
-            }
+            // Determinar o contato a ser usado
+            registrationContact = registrationMethod === 'email' ? email : telefone;
+            const tipoContato = registrationMethod === 'email' ? 'e-mail' : 'telefone';
 
-            // Validação de campos
-            if (!nome || !senha || !contato) {
-                alert("Por favor, preencha o Nome, a Senha e o campo de " + tipo + ".");
-                return;
-            }
+            const payload = {
+                nome,
+                senha,
+                bi, // Novo campo
+                provincia, // Novo campo
+                [registrationMethod]: registrationContact // Envia 'email' ou 'telefone' dependendo da escolha
+            };
 
-            registrationContact = contato; // Salva o contato para exibir na verificação
-            
-            // Geração de um código de 4 dígitos aleatório (SIMULADO)
-            verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
-            
-            // Exibe o código (Em um sistema real, este código seria enviado por e-mail/SMS)
-            alert(`
-                ✅ Cadastro iniciado!
+            // Atualiza o texto de verificação antes da chamada
+            document.getElementById('contact-type').textContent = tipoContato;
+            document.getElementById('contact-value').textContent = registrationContact;
+
+            // --- SIMULAÇÃO DE CHAMADA AO BACKEND PARA INICIAR O CADASTRO E ENVIO DO CÓDIGO ---
+            try {
+                // Em um ambiente de desenvolvimento real, esta chamada POST enviaria todos os dados acima para o seu servidor.
+                const response = await fetch('/api/iniciar_cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
                 
-                SIMULAÇÃO DE ENVIO: O código enviado para seu ${tipo} (${contato}) é: ${verificationCode}
-                
-                (Em produção, este alerta não seria exibido.)
-            `);
+                // --- Simulação de sucesso (o backend enviou o código real) ---
+                if (true) { // Em produção: if (response.ok) {
+                    alert(`✅ Solicitação de cadastro enviada! Verifique seu ${tipoContato}.
+Dados enviados para o backend (simulação):
+Nome: ${payload.nome}
+BI: ${payload.bi}
+Província: ${payload.provincia}
+Contato: ${payload.contato || payload.email || payload.telefone}`);
+                    
+                    window.location.hash = '#verificacao-page'; // Muda para a tela de verificação
+                } else {
+                    // Tratar erros do servidor (ex: 409 Conflito - Usuário já existe)
+                    const errorData = await response.json();
+                    alert(`❌ Falha ao iniciar cadastro: ${errorData.message || 'Erro desconhecido do servidor.'}`);
+                }
 
-            // Atualiza o texto na página de verificação
-            document.getElementById('contact-type').textContent = tipo;
-            document.getElementById('contact-value').textContent = contato;
-
-            // Muda para a seção de verificação
-            window.location.hash = '#verificacao-page';
-        }
-
-        // 2. SIMULAÇÃO: Verifica se o código digitado é o correto
-        function verificarCodigo() {
-            const codigoDigitado = document.getElementById('codigo_confirmacao').value;
-
-            if (codigoDigitado === verificationCode) {
-                alert("🎉 Conta confirmada com sucesso! Você será redirecionado para o Login.");
-                
-                // Em um sistema real, aqui você enviaria os dados de cadastro para o servidor salvar
-
-                // Limpa o estado e retorna ao Login
-                verificationCode = null;
-                registrationContact = '';
-                document.getElementById('cadastro-form').reset();
-                document.getElementById('codigo_confirmacao').value = '';
-                window.location.hash = '#login-page';
-            } else {
-                alert("❌ Código inválido. Tente novamente.");
-                document.getElementById('codigo_confirmacao').value = ''; // Limpa o campo
+            } catch (error) {
+                // Tratar erros de rede (servidor offline, etc.)
+                alert(`⚠️ Erro de comunicação com o servidor. Verifique se o backend está rodando. Detalhes: ${error.message}`);
             }
         }
 
-        // Inicializa a visualização e o método de cadastro padrão
+        async function handleVerification(event) {
+            event.preventDefault();
+
+            const codigo = document.getElementById('codigo_confirmacao').value;
+
+            const payload = {
+                codigo,
+                contato: registrationContact // O e-mail ou telefone usado no cadastro
+            };
+
+            // --- SIMULAÇÃO DE CHAMADA AO BACKEND PARA VALIDAR O CÓDIGO ---
+            try {
+                // A URL real seria o endpoint da sua API, por exemplo: 'https://seusite.com/api/verify'
+                const response = await fetch('/api/verificar_codigo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                // --- Simulação de sucesso (o backend validou o código) ---
+                if (true) { // Em produção: if (response.ok) {
+                    alert("🎉 Conta confirmada com sucesso! Você já pode fazer login.");
+                    
+                    // Limpar e redirecionar
+                    document.getElementById('cadastro-form').reset();
+                    document.getElementById('codigo_confirmacao').value = '';
+                    window.location.hash = '#login-page';
+
+                } else {
+                    // Tratar código incorreto ou expirado
+                    const errorData = await response.json();
+                    alert(`❌ Verificação falhou: ${errorData.message || 'Código inválido ou expirado.'}`);
+                }
+            } catch (error) {
+                alert(`⚠️ Erro de comunicação com o servidor ao tentar verificar. Detalhes: ${error.message}`);
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            // --- SIMULAÇÃO DE CHAMADA AO BACKEND PARA LOGIN ---
+            const email = document.getElementById('email_login').value;
+            
+            alert(`Simulando LOGIN para ${email}. Se o backend for bem-sucedido, ele enviará o usuário para a página de Notas.`);
+            
+            // Se o login fosse bem-sucedido no backend, você faria:
+            window.location.hash = '#notas-page';
+        }
+
+        // Inicializa a visualização, o método de cadastro padrão e preenche as províncias
         window.addEventListener('load', () => {
+            populateProvinces(); // Preenche o <select>
             updateView();
-            setRegistrationMethod('email'); // Garante que o E-mail está ativo ao carregar
+            setRegistrationMethod('email');
         });
         window.addEventListener('hashchange', updateView);
     </script>
