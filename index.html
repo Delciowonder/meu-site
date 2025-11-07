@@ -1,76 +1,363 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão de notas</title>
+    <title>Sistema de Gestão de Notas - Login & Cadastro</title>
     <style>
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: rgb(164, 149, 179);
-            margin-top: 59PX;
+        /* [CSS Anterior Omitido para Foco, mas o código completo estaria aqui] */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
         }
-         .login-container {
-             width: 300px;
-              margin: 50px auto;
-               padding: 20px;
-                background-color: #fff;
-                 border: 1px solid #ddd;
-                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-         }
 
-          .login-form {
-             margin-top: 20px;
-          }
+        .page-section {
+            display: none;
+            padding: 40px 20px;
+            min-height: 80vh;
+        }
 
-           .login-form input[type="email"], .login-form input[type="password"] {
-             width: 100%;
-              height: 40px;
-               margin-bottom: 20px;
-                padding: 10px;
-                 border: 1px solid #ccc;
-           }
+        #login-page {
+            display: block;
+        }
 
-            .login-form button[type="submit"] {
-                 width: 100%;
-                  height: 40px;
-                   background-color: #333;
-                    color: #ce1b1b;
-                     border: none;
-                      padding: 10px;
-                       font-size: 16px;
-                        cursor: pointer;
-            }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
 
-             .login-form button[type="submit"]:hover {
-                 background-color: #444;
-             }
-             
-       
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"],
+        input[type="tel"], /* Adicionado o estilo para input tel */
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Estilos da seção de Notas e Verificação (Mantidos) */
+        #notas-page .container { max-width: 800px; }
+        #notas-page h2 { margin-top: 0; margin-bottom: 20px; }
+        .lista-notas { margin-top: 30px; }
+        .nota { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-left: 5px solid #28a745; background-color: #e9f7ee; border-radius: 4px; }
+        .nota h4 { margin-top: 0; color: #28a745; }
+        .nota small { display: block; text-align: right; color: #6c757d; margin-top: 5px; }
+        #logout-link { float: right; margin-top: -30px; font-size: 14px; }
+        #verification-form input[type="text"] { font-size: 24px; text-align: center; letter-spacing: 5px; }
+
+        /* Estilo específico para a escolha E-mail/Telefone */
+        .toggle-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .toggle-options button {
+            width: 50%;
+            padding: 10px;
+            background-color: #eee;
+            color: #333;
+            border: none;
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        .toggle-options button.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        .input-group-field {
+            display: none; /* Esconde os campos por padrão */
+        }
+        .input-group-field.active {
+            display: block; /* Exibe o campo ativo */
+        }
     </style>
 </head>
 <body>
-    <center><h3><u>SEJA BEM-VINDO AO SISTEMA DE GESTÃO DA SIBER_WORK CANUELA</u></h3></center>
-    <BR><BR>
-        <form ><center><h3>Login</h3>
-        <br>
-       E-mail: <input type="email" placeholder="example@gmail.com" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$">
-       <br><br>
-       
-       Password: <input type="password" id="senha" required >
-       <br><br>
-       <a href="Esquici minha senh.html" target="_blank">Esqueci minha Password
-       </a> <span style="margin: 0 10px;"></span> <a href="Nova conta.html" target="_blank">Novo Cadastro</a>
-       <span class="erro"></span>
-      <br><br><br><br>
-       <button type="submit">Entrar</button>             <input type="reset" value="Limpar"></input>
-    </center>
-</form>
-<br><br>
-      
+    <script>
+        let verificationCode = null;
+        let registrationMethod = 'email'; // Padrão: 'email'
+        let registrationContact = ''; // Contato usado para a verificação
+    </script>
+
+    <section id="login-page" class="page-section">
+        <div class="container">
+            <h1>Sistema de Gestão de Notas</h1>
+            <h2>Fazer Login</h2>
+            <form action="#notas-page" method="GET"> 
+                <div><label for="email_login">E-mail:</label><input type="email" id="email_login" name="email" required></div>
+                <div><label for="senha_login">Senha:</label><input type="password" id="senha_login" name="senha" required></div>
+                <button type="submit"><a href="#notas-page" style="color: white; display: inline; text-decoration: none;">Entrar</a></button>
+            </form>
+            <p>Não tem uma conta?</p>
+            <a href="#cadastro-page">Criar Conta Agora</a>
+        </div>
+    </section>
+
+    <section id="cadastro-page" class="page-section">
+        <div class="container">
+            <h1>Sistema de Gestão de Notas</h1>
+            <h2>Criar Nova Conta</h2>
+            
+            <form id="cadastro-form">
+                <div>
+                    <label for="nome_cadastro">Nome de Usuário:</label>
+                    <input type="text" id="nome_cadastro" name="nome" required>
+                </div>
+                
+                <label>Método de Cadastro:</label>
+                <div class="toggle-options">
+                    <button type="button" id="toggle-email" class="active" onclick="setRegistrationMethod('email')">E-mail</button>
+                    <button type="button" id="toggle-phone" onclick="setRegistrationMethod('phone')">Telefone</button>
+                </div>
+                
+                <div id="email-group" class="input-group-field active">
+                    <label for="email_cadastro">E-mail:</label>
+                    <input type="email" id="email_cadastro" name="email">
+                </div>
+                
+                <div id="phone-group" class="input-group-field">
+                    <label for="telefone_cadastro">Telefone (DDD + Número):</label>
+                    <input type="tel" id="telefone_cadastro" name="telefone" placeholder="(99) 99999-9999">
+                </div>
+                
+                <div>
+                    <label for="senha_cadastro">Senha:</label>
+                    <input type="password" id="senha_cadastro" name="senha" required>
+                </div>
+                
+                <button type="button" onclick="iniciarVerificacao()">Cadastrar e Verificar</button>
+            </form>
+            
+            <p>Já tem uma conta?</p>
+            <a href="#login-page">Fazer Login</a>
+        </div>
+    </section>
+    
+    <section id="verificacao-page" class="page-section">
+        <div class="container">
+            <h1>Verificação de Segurança</h1>
+            <h2>Insira o Código de Confirmação</h2>
+            
+            <p id="msg-verificacao" style="color: #555;">Enviamos um código de 4 dígitos para o seu <span id="contact-type">e-mail</span>: <strong id="contact-value"></strong> (Simulado).</p>
+            
+            <form id="verification-form">
+                <div>
+                    <label for="codigo_confirmacao">Código (4 dígitos):</label>
+                    <input type="text" id="codigo_confirmacao" name="codigo" maxlength="4" pattern="\d{4}" required>
+                </div>
+                
+                <button type="button" onclick="verificarCodigo()">Confirmar</button>
+            </form>
+            
+            <a href="#login-page">Voltar para o Login</a>
+        </div>
+    </section>
 
 
-<a href="https://wa.me/244935264758?text=Ol%C3%A1%20D%C3%A9lcio%20Wonder%20preciso%20de%20ajuda">Ajuda!</a>
-    </body>
+    <section id="notas-page" class="page-section">
+        <div class="container">
+            <h2>Gestão das Minhas Notas</h2>
+            <a id="logout-link" href="#login-page">Sair (Logout)</a>
+            <section class="adicionar-nota">
+                <h3>Adicionar Nova Nota</h3>
+                <form action="#" method="POST">
+                    <div><label for="titulo_nota">Título:</label><input type="text" id="titulo_nota" name="titulo" required></div>
+                    <div><label for="conteudo_nota">Conteúdo:</label><textarea id="conteudo_nota" name="conteudo" rows="5" required></textarea></div>
+                    <button type="submit">Salvar Nota</button>
+                </form>
+            </section>
+            <hr style="margin: 30px 0;">
+            <section class="lista-notas">
+                <h3>Notas Armazenadas (Exemplo)</h3>
+                <div class="nota">
+                    <h4>Reunião com a Equipe</h4>
+                    <p>Lembrar de discutir o cronograma do projeto Alfa.</p>
+                    <small>Criada em: 07/11/2025</small>
+                </div>
+                <p style="text-align: center; font-style: italic;">*(A funcionalidade completa de salvar e gerenciar notas requer backend.)*</p>
+            </section>
+        </div>
+    </section>
 
+    <script>
+        // Função para alternar a exibição das seções
+        function updateView() {
+            const hash = window.location.hash || '#login-page';
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            const activeSection = document.querySelector(hash);
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            }
+        }
+
+        // NOVO: Função para alternar entre E-mail e Telefone no cadastro
+        function setRegistrationMethod(method) {
+            registrationMethod = method;
+            const emailGroup = document.getElementById('email-group');
+            const phoneGroup = document.getElementById('phone-group');
+            const toggleEmail = document.getElementById('toggle-email');
+            const togglePhone = document.getElementById('toggle-phone');
+
+            // 1. Alterna a visibilidade dos campos
+            if (method === 'email') {
+                emailGroup.classList.add('active');
+                phoneGroup.classList.remove('active');
+                document.getElementById('telefone_cadastro').removeAttribute('required'); // Remove required do telefone
+                document.getElementById('email_cadastro').setAttribute('required', 'required'); // Adiciona required no email
+            } else { // 'phone'
+                phoneGroup.classList.add('active');
+                emailGroup.classList.remove('active');
+                document.getElementById('email_cadastro').removeAttribute('required'); // Remove required do email
+                document.getElementById('telefone_cadastro').setAttribute('required', 'required'); // Adiciona required no telefone
+            }
+
+            // 2. Alterna o estilo dos botões
+            toggleEmail.classList.toggle('active', method === 'email');
+            togglePhone.classList.toggle('active', method === 'phone');
+            
+            // 3. Limpa o campo inativo para evitar confusão de dados
+            if (method === 'email') {
+                 document.getElementById('telefone_cadastro').value = '';
+            } else {
+                document.getElementById('email_cadastro').value = '';
+            }
+        }
+        
+        // 1. SIMULAÇÃO: Inicia o processo de verificação (Gera e "envia" o código)
+        function iniciarVerificacao() {
+            const nome = document.getElementById('nome_cadastro').value;
+            const senha = document.getElementById('senha_cadastro').value;
+            
+            let contato = '';
+            let tipo = '';
+
+            if (registrationMethod === 'email') {
+                contato = document.getElementById('email_cadastro').value;
+                tipo = 'e-mail';
+            } else { // 'phone'
+                contato = document.getElementById('telefone_cadastro').value;
+                tipo = 'telefone';
+            }
+
+            // Validação de campos
+            if (!nome || !senha || !contato) {
+                alert("Por favor, preencha o Nome, a Senha e o campo de " + tipo + ".");
+                return;
+            }
+
+            registrationContact = contato; // Salva o contato para exibir na verificação
+            
+            // Geração de um código de 4 dígitos aleatório (SIMULADO)
+            verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            // Exibe o código (Em um sistema real, este código seria enviado por e-mail/SMS)
+            alert(`
+                ✅ Cadastro iniciado!
+                
+                SIMULAÇÃO DE ENVIO: O código enviado para seu ${tipo} (${contato}) é: ${verificationCode}
+                
+                (Em produção, este alerta não seria exibido.)
+            `);
+
+            // Atualiza o texto na página de verificação
+            document.getElementById('contact-type').textContent = tipo;
+            document.getElementById('contact-value').textContent = contato;
+
+            // Muda para a seção de verificação
+            window.location.hash = '#verificacao-page';
+        }
+
+        // 2. SIMULAÇÃO: Verifica se o código digitado é o correto
+        function verificarCodigo() {
+            const codigoDigitado = document.getElementById('codigo_confirmacao').value;
+
+            if (codigoDigitado === verificationCode) {
+                alert("🎉 Conta confirmada com sucesso! Você será redirecionado para o Login.");
+                
+                // Em um sistema real, aqui você enviaria os dados de cadastro para o servidor salvar
+
+                // Limpa o estado e retorna ao Login
+                verificationCode = null;
+                registrationContact = '';
+                document.getElementById('cadastro-form').reset();
+                document.getElementById('codigo_confirmacao').value = '';
+                window.location.hash = '#login-page';
+            } else {
+                alert("❌ Código inválido. Tente novamente.");
+                document.getElementById('codigo_confirmacao').value = ''; // Limpa o campo
+            }
+        }
+
+        // Inicializa a visualização e o método de cadastro padrão
+        window.addEventListener('load', () => {
+            updateView();
+            setRegistrationMethod('email'); // Garante que o E-mail está ativo ao carregar
+        });
+        window.addEventListener('hashchange', updateView);
+    </script>
+    
+</body>
 </html>
