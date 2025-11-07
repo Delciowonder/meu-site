@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Cadastro</title>
+    
+ <style>
+    body{
+          font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(164, 149, 179);
+            margin-top: 59PX;
+    }
+   .required::after{
+      content: "*";
+      color: rgb(228, 8, 8);
+   }
+   select{
+      width: 10%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      color: black;
+      background-color: rgb(187, 255, 0);
+    float: left;
+    margin-left: 200px;
+     
+   }
+  
+ </style>
+</head>
+<body >
+<center>
+   <h3>Fazendo Cadastro Na SIBER_WORK
+   </h3>
+   <br><br>
+   <form >
+      <label class="required" for="Nome"></label>
+      NOME:<input type="text" name="Nome" required   ;">
+      
+      <input type="date" name="data_nascimento" id="data_nascimento">
+      <br><br>
+     <H6> <p>PROVÍNCIA</p></H6>
+      <SELECT NAME="PROVINCIA">
+          <OPTION VALUE="" >PROVÍNCIA</OPTION>
+          <OPTION VALUE="BENGO">BENGO</OPTION>
+          <OPTION VALUE="BENGUELA">BENGUELA</OPTION>
+          <OPTION VALUE="BIÉ">BIÉ</OPTION>
+          <OPTION VALUE="CABINDA">CABINDA</OPTION>
+          <OPTION VALUE="CUANDO CUBANGO">CUANDO CUBANGO</OPTION>
+           <OPTION VALUE="CUNENE">CUNENE</OPTION>
+          <OPTION VALUE="CUANZA NORTE">CUANZA nORTE</OPTION>
+          <OPTION VALUE="CUANZA SUL">CUANZA sUL 
+                
+          </OPTION>
+          <OPTION VALUE="HUAMBO">HUAMBO</OPTION>
+          <OPTION VALUE="HUÍLA">LUÍLA</OPTION>
+          <OPTION VALUE="LUANDA">LUANDA</OPTION>
+          <OPTION VALUE="LUNDA nORTE">LUNDA nORTE</OPTION>
+          <OPTION VALUE="LUNDA sUL">LUNDA sUL</OPTION>
+          <OPTION VALUE="MALANJE">MALANJE</OPTION>
+          <OPTION VALUE="MOXICO">MOXICO</OPTION>
+          <OPTION VALUE="NAMIBE">Namibe</option>
+          <option value="Uíge">Uíge</option>
+          <option value="Zaire">Zaire</option>
+          </select></OPTION>
+      </SELECT>
+      <br>
+       E-mail: <input type="email" placeholder="example@gmail.com" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$">
+      <br>
+      CONTACTO: <input type="tel" pattern="[0-9]{9}" id="telefone" placeholder="Número de telefone" required , maxlength="9">
+   </form>
+</center>
+    
+
+          
+
+
+
+
+
+
+</body>
+
+</html>
